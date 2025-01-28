@@ -7,6 +7,9 @@ import argparse
 import yaml
 import torch
 
+from models.CNNs import CNN
+
+
 
 
 
@@ -22,7 +25,13 @@ def main(training_mode: str, num_epochs: int) -> None:
 
 
     device = torch.device('mps' if torch.mps.is_available() else 'cpu')  # mps in Mac, CUDA in Linux and Windows
-    print( f'current device is {device}')
+    print( f'Current device is {device}')
+
+
+    model = CNN(model_name = 'resnet18', pretrained=True, out_channels=10).to(device)
+
+
+
 
 
 
