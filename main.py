@@ -79,12 +79,12 @@ def main(training_mode: str, num_epochs: int) -> None:
         train_dataset, val_dataset, test_dataset = random_split(dataset, [train_size, val_size, test_size])
         train_loader = DataLoader(train_dataset, batch_size=batch_size, shuffle=True, num_workers=num_workers)
         val_loader = DataLoader(val_dataset, batch_size=batch_size, shuffle=False, num_workers=num_workers)
-        test_loader = DataLoader(test_dataset, batch_size=batch_size, shuffle=False, num_workers=num_workers)
+        test_loader = DataLoader(test_dataset, batch_size=1, shuffle=False, num_workers=num_workers)
         print(f'train size {train_size} | val size {val_size} | test size {test_size}')
         train(epochs, model, train_loader, val_loader, optimizer, loss_function, device, model_name, scheduler = scheduler)
         plot_losses(model_name)  # plots and saves the diagram of train and val losses
         _,targets, output_labels = test(test_loader, model, model_name, loss_function, device)
-        metrics(targets,output_labels)
+        metrics(targets,output_labels, model_name)
 
 
 

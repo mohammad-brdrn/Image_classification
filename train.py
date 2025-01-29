@@ -12,7 +12,7 @@ def register_checkpoints(epoch:int, train_losses: list[float],val_losses: list[f
                    'optimizer_state_dict': optimizer.state_dict()
                    }
     os.makedirs('checkpoints/', exist_ok=True)
-    torch.save(check_point, f'checkpoints/check_point_{model_name}.pth')
+    torch.save(check_point, f'checkpoints/checkpoint_{model_name}.pth')
 
 def train(epochs:int, model, train_loader, val_loader, optimizer, criterion, device, model_name, scheduler=None):
     """ This function trains the model by getting the needed items. """
@@ -35,12 +35,13 @@ def train(epochs:int, model, train_loader, val_loader, optimizer, criterion, dev
         train_losses.append(train_loss)
 
         val_loss = validation(val_loader, model, criterion, device,epoch)
+        val_losses.append(val_loss)
         scheduler.step()
-
-        print(f'epoch{epoch}, train_loss: {train_loss:.3f}, val_loss: {val_loss:.3f}')
+        print(f'epoch{epoch}, train_loss: {train_loss}, val_loss: {val_loss}')
         if val_loss < best_val_loss:
             best_val_loss = val_loss
             torch.save(model.state_dict(), f'checkpoints/best_{model_name}.pth')
+            print(f'saving the best model in best_{model_name}.pth')
 
         register_checkpoints(epoch, train_losses, val_losses, model, optimizer, model_name)
 
