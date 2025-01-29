@@ -20,6 +20,7 @@ from torchvision.datasets import CIFAR10 # will be deleted after testing the per
 from models.CNNs import CNN
 from train import train
 from Data.transforms import Image_classification_transform
+from evaluation import plot_losses , test, metrics
 
 
 
@@ -81,8 +82,9 @@ def main(training_mode: str, num_epochs: int) -> None:
         test_loader = DataLoader(test_dataset, batch_size=batch_size, shuffle=False, num_workers=num_workers)
         print(f'train size {train_size} | val size {val_size} | test size {test_size}')
         train(epochs, model, train_loader, val_loader, optimizer, loss_function, device, model_name, scheduler = scheduler)
-
-        # Data set part will be developed later
+        plot_losses(model_name)  # plots and saves the diagram of train and val losses
+        _,targets, output_labels = test(test_loader, model, model_name, loss_function, device)
+        metrics(targets,output_labels)
 
 
 

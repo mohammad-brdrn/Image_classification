@@ -2,4 +2,5 @@ venv/
 .idea/
 checkpoints/
 data/
-.DS_store
+.DS_Store
+logs/
