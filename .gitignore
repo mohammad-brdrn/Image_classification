@@ -1,6 +1,9 @@
 venv/
 .idea/
 checkpoints/
-data/
+#data/
 .DS_Store
 logs/
+**/*.pyc
+__pycache__/
+Data/cifar-10-python.tar.gz
